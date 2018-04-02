@@ -1,6 +1,7 @@
 package com.lseg.test.CumRetCalculator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import java.util.Date;
 import java.util.TreeMap;
@@ -32,11 +33,18 @@ public class CumRetCalculatorTest
 
     }
 
+    @Test( expected = IllegalArgumentException.class )
+    public void test_dates_as_null() throws Exception
+    {
+        cumRetCalculator.findCumulativeReturn(null, null);
+    }
+
     @Test
-    public void test_cumulative_return()
+    public void test_cumulative_return() throws Exception
     {
         // this will not return null as specified in requirement - returns NaN
         // instead as we are not returning string
+
         assertEquals(getCumulativeReturn("2015-01-31", baseDate), Double.NaN, 0);
 
         double test1 = getCumulativeReturn("2015-02-28", baseDate);
@@ -62,7 +70,7 @@ public class CumRetCalculatorTest
     }
 
     @Test
-    public void test_cumulative_return_negative()
+    public void test_cumulative_return_negative() throws Exception
     {
 
         double test1 = getCumulativeReturn("2015-02-28", baseDate);
@@ -96,7 +104,7 @@ public class CumRetCalculatorTest
 
     }
 
-    private double getCumulativeReturn(String date, String base)
+    private double getCumulativeReturn(String date, String base) throws Exception
     {
         Date asOfDate = DateUtil.toDate(date, DATE_FORMAT);
         Date baseDate = DateUtil.toDate(base, DATE_FORMAT);

@@ -20,8 +20,11 @@ class CumRetCalculator
         this.dailyReturnTreeMap = DailyReturnSingleton.getInstance(dailyReturns).getDailyReturn();
     }
 
-    public double findCumulativeReturn(Date asOf, Date base)
+    public double findCumulativeReturn(Date asOf, Date base) throws Exception
     {
+        if(asOf == null || base == null){
+            throw new IllegalArgumentException("As Of Date and Base Date cannot be null");
+        }
         // since return type is double, we cannot return null so returning NaN
         if (asOf.before(base)) {
             return Double.NaN;
